@@ -1,9 +1,12 @@
-FROM python:3.8
+FROM python:latest
 
 WORKDIR /app
 
-COPY requirements.txt /app/
-COPY . /app/
+COPY requirements.txt ./
 
-EXPOSE 80
+RUN pip install --no-cache-dir --upgrade -r requirements.txt
+RUN pip install fastapi uvicorn
+
+COPY main.py ./
+
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80"]
